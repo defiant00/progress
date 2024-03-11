@@ -6,6 +6,7 @@ b: u8,
 a: u8,
 
 pub const black = from888(0, 0, 0);
+pub const light_grey = from888(0xa0, 0xa0, 0xa0);
 pub const white = from888(0xff, 0xff, 0xff);
 
 fn toByte(val: u5) u8 {

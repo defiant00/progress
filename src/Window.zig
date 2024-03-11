@@ -181,10 +181,18 @@ pub fn run(self: *Window) !void {
             return error.SDLError;
         }
 
+        // clear framebuffer
+        try self.setColor(Color.black);
+        if (sdl.SDL_RenderClear(self.renderer) != 0) {
+            sdl.SDL_Log("Unable to clear framebuffer: %s", sdl.SDL_GetError());
+            return error.SDLError;
+        }
+
         // draw
         try self.tint(Color.white);
-        try self.print(4, 4, "Progress!");
-        try self.print(4, 16, "Catnip: ");
+        try self.print(4, 4, "Progress!", .{});
+        try self.tint(Color.light_grey);
+        try self.print(4, 16, "Kibble: {}", .{game.state.kibble});
 
         // set render target to window
         if (sdl.SDL_SetRenderTarget(self.renderer, null) != 0) {
@@ -218,7 +226,10 @@ fn getTick() u64 {
     return sdl.SDL_GetTicks64() / UPDATE_MS;
 }
 
-fn print(self: Window, x: u16, y: u16, text: []const u8) !void {
+fn print(self: Window, x: u16, y: u16, comptime fmt: []const u8, args: anytype) !void {
+    var buf: [128]u8 = undefined;
+    const text = try std.fmt.bufPrint(&buf, fmt, args);
+
     var src = sdl.SDL_Rect{ .x = 0, .y = 0, .w = 3, .h = 7 };
     var dest = sdl.SDL_Rect{ .x = x, .y = y, .w = 3, .h = 7 };
     {
@@ -263,7 +274,10 @@ fn print(self: Window, x: u16, y: u16, text: []const u8) !void {
     }
 }
 
-fn printMono(self: Window, x: u16, y: u16, text: []const u8) !void {
+fn printMono(self: Window, x: u16, y: u16, comptime fmt: []const u8, args: anytype) !void {
+    var buf: [128]u8 = undefined;
+    const text = try std.fmt.bufPrint(&buf, fmt, args);
+
     var src = sdl.SDL_Rect{ .x = 0, .y = 0, .w = 3, .h = 7 };
     var dest = sdl.SDL_Rect{ .x = x, .y = y, .w = 3, .h = 7 };
     {

@@ -3,7 +3,7 @@ const std = @import("std");
 const Core = @This();
 
 const State = struct {
-    catnip: u64,
+    kibble: u64,
     wood: u64,
 };
 
@@ -12,7 +12,7 @@ state: State,
 pub fn init() Core {
     return .{
         .state = .{
-            .catnip = 0,
+            .kibble = 0,
             .wood = 0,
         },
     };
@@ -23,5 +23,5 @@ pub fn deinit(self: Core) void {
 }
 
 pub fn tick(self: *Core) void {
-    _ = self;
+    self.state.kibble += 1;
 }

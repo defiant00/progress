@@ -4,7 +4,11 @@ const Core = @This();
 
 const State = struct {
     kibble: u64,
+    clay: u64,
     wood: u64,
+    stone: u64,
+
+    brick: u64,
 };
 
 state: State,
@@ -13,7 +17,11 @@ pub fn init() Core {
     return .{
         .state = .{
             .kibble = 0,
+            .clay = 0,
             .wood = 0,
+            .stone = 0,
+
+            .brick = 0,
         },
     };
 }

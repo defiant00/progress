@@ -192,7 +192,13 @@ pub fn run(self: *Window) !void {
         try self.tint(Color.white);
         try self.print(4, 4, "Progress!", .{});
         try self.tint(Color.light_grey);
-        try self.print(4, 16, "Kibble: {}", .{game.state.kibble});
+        try self.print(4, 16, "Kibble: {}\nClay: {}\nWood: {}\nStone: {}\nBrick: {}", .{
+            game.state.kibble,
+            game.state.clay,
+            game.state.wood,
+            game.state.stone,
+            game.state.brick,
+        });
 
         // set render target to window
         if (sdl.SDL_SetRenderTarget(self.renderer, null) != 0) {
